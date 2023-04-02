@@ -50,7 +50,7 @@ public class CancellationRescheduling {
 
     @Override
     public String toString() {
-        return "CancellationRescheduling{" +
+        return "factoryCancellationRescheduling{" +
                 "cancellationReschedulingId=" + cancellationReschedulingId +
                 ", bookingId=" + bookingId +
                 ", reason='" + reason + '\'' +

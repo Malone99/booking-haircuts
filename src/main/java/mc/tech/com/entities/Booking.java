@@ -126,8 +126,9 @@ public class Booking {
             this.duration = duration;
             return this;
         }
-        public void setStatus(String status) {
+        public Builder setStatus(String status) {
             this.status = status;
+            return this;
         }
 
         public Booking builder()

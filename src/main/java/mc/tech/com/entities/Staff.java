@@ -24,6 +24,10 @@ public class Staff {
         this.position = builder.position;
     }
 
+    public Staff() {
+
+    }
+
 
     public int getStaffId() {
         return staffId;
@@ -49,7 +53,7 @@ public class Staff {
     }
     @Override
     public String toString() {
-        return "Staff{" +
+        return "factoryStaff{" +
                 "staffId=" + staffId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
