@@ -28,6 +28,10 @@ public class Customer {
         this.paymentInformation =builder.  paymentInformation;
     }
 
+    public Customer() {
+
+    }
+
     public int getCustomerId() {
         return customerId;
     }
