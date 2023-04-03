@@ -10,23 +10,25 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookingId;
-    private int customerId;
-    private int serviceId;
-    private int staffId;
+    private String customerName;
+    private String serviceName;
+    private String staffName;
     private String date;
     private String time;
     private int duration;
+    private double price;
     private String status;
 
 
     public Booking(Builder builder) {
         this.bookingId = builder.bookingId;
-        this.customerId =  builder.customerId;
-        this.serviceId =  builder.serviceId;
-        this.staffId =  builder.staffId;
+        this.customerName =  builder.customerName;
+        this.serviceName =  builder.serviceName;
+        this.staffName =  builder.staffName;
         this.date = builder. date;
         this.time = builder. time;
         this.duration =  builder.duration;
+        this.price = builder. price;
         this.status =  builder.status;
     }
 
@@ -34,20 +36,25 @@ public class Booking {
 
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+
     public int getBookingId() {
         return bookingId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public int getStaffId() {
-        return staffId;
+    public String getStaffName() {
+        return staffName;
     }
 
     public String getDate() {
@@ -71,24 +78,29 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "bookingId=" + bookingId +
-                ", customerId=" + customerId +
-                ", serviceId=" + serviceId +
-                ", staffId=" + staffId +
+                ", customerId=" + customerName +
+                ", serviceId=" + serviceName +
+                ", staffId=" + staffName +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", duration=" + duration +
+                ", price=" + price +
                 ", status='" + status + '\'' +
                 '}';
     }
     public static class Builder {
 
         private int bookingId;
-        private int customerId;
-        private int serviceId;
-        private int staffId;
+        private String customerName;
+        private String serviceName;
+        private String staffName;
         private String date;
         private String time;
         private int duration;
+
+
+
+        private double price;
         private String status;
 
 
@@ -96,19 +108,23 @@ public class Booking {
             this.bookingId = bookingId;
             return this;
         }
-
-        public Builder setCustomerId(int customerId) {
-            this.customerId = customerId;
+        public Builder setPrice(double price) {
+            this.price = price;
             return this;
         }
 
-        public Builder setServiceId(int serviceId) {
-            this.serviceId = serviceId;
+        public Builder setCustomerName(String customerName) {
+            this.customerName = customerName;
             return this;
         }
 
-        public Builder setStaffId(int staffId) {
-            this.staffId = staffId;
+        public Builder setServiceName(String serviceName) {
+            this.serviceName = serviceName;
+            return this;
+        }
+
+        public Builder setStaffName(String staffName) {
+            this.staffName = staffName;
             return this;
         }
 

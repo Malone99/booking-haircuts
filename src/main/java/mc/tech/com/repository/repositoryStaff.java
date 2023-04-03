@@ -11,5 +11,6 @@ import java.util.List;
 public interface repositoryStaff  extends JpaRepository<Staff,Integer> {
     Staff findById(int id);
     Staff findByEmail(String email);
+    Staff findByName(String StaffName);
     List<Staff> findAll();
 }

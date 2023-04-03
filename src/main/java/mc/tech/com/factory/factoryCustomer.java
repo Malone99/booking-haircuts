@@ -9,7 +9,7 @@ public class factoryCustomer {
                                          String password,String address, String paymentInformation){
 
         return  new Customer.Builder().setName(name).setEmail(email).setPhoneNumber(phoneNumber)
-                .setPhoneNumber(password).setAddress(address).setPaymentInformation(paymentInformation).builder();
+                .setPassword(password).setAddress(address).setPaymentInformation(paymentInformation).builder();
 
     }
 
@@ -17,7 +17,7 @@ public class factoryCustomer {
                                          String password,String address, String paymentInformation){
 
         return  new Customer.Builder().setCustomerId(customerId).setName(name).setEmail(email).setPhoneNumber(phoneNumber)
-                .setPhoneNumber(password).setAddress(address).setPaymentInformation(paymentInformation).builder();
+                .setPassword(password).setAddress(address).setPaymentInformation(paymentInformation).builder();
 
     }
 }

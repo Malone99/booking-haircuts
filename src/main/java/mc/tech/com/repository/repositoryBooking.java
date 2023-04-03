@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface repositoryBooking extends JpaRepository<Booking,Integer> {
     Booking findById(int id);
-    List<Booking> findByCustomerId(int customerId);
-    List<Booking> findByStaffId(int staffId);
+    boolean existsBookingByDateAndTime(String date, String time);
+//    List<Booking> findByCustomerId(int customerId);
+    List<Booking> findByStaffName(String staffName);
     List<Booking> findByDate(String date);
 
 }

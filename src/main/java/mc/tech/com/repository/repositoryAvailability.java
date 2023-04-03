@@ -10,6 +10,6 @@ public interface repositoryAvailability extends JpaRepository<Availability,Integ
     Availability findById(int id);
     List<Availability> findByDate(String date);
     List<Availability> findByStaffId(int staffId);
-    List<Availability> findAvailabilityByDateOrTime(String startDateTimeORendDateTime);
+//    List<Availability> findAvailabilityByDateOrTime(String startDateTimeORendDateTime);
 
 }

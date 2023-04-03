@@ -24,6 +24,10 @@ public class Service {
         this.price = builder.price;
     }
 
+    public Service() {
+
+    }
+
     public int getServiceId() {
         return serviceId;
     }
