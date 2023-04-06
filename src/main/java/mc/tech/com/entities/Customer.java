@@ -1,9 +1,8 @@
 package mc.tech.com.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
+
 @Entity
 public class Customer {
 

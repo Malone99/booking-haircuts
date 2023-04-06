@@ -13,4 +13,7 @@ public interface repositoryStaff  extends JpaRepository<Staff,Integer> {
     Staff findByEmail(String email);
     Staff findByName(String StaffName);
     List<Staff> findAll();
+    boolean existsStaffByName(String StaffName);
+    boolean existsStaffByPhoneNumber(String PhoneNumber);
+    boolean existsStaffByEmail(String email);
 }

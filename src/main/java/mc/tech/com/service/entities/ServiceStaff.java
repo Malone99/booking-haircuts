@@ -3,6 +3,7 @@ package mc.tech.com.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mc.tech.com.entities.Staff;
+import mc.tech.com.factory.factoryStaff;
 import mc.tech.com.repository.repositoryStaff;
 import mc.tech.com.service.implementation.StaffImplementation;
 
@@ -16,9 +17,24 @@ public class ServiceStaff implements StaffImplementation {
     private final repositoryStaff StaffRepository;
     @Override
     public Staff save(Staff staff) {
-        Staff save=this.StaffRepository.save(staff);
-        log.info("staff was register:"+save);
-        return save;
+
+
+        if (StaffRepository.existsStaffByName(staff.getName()))
+        {
+            throw new IllegalArgumentException("Staff Name already Exist");
+        }else if(StaffRepository.existsStaffByEmail(staff.getEmail())){
+
+            throw new IllegalArgumentException("Staff Email already Exist");
+        } else if(StaffRepository.existsStaffByPhoneNumber(staff.getPhoneNumber())){
+
+            throw new IllegalArgumentException("Staff Phone Number already Exist");
+        }
+        Staff getStaffDetails= factoryStaff.BuildStaff(staff.getName(),
+                staff.getEmail(),staff.getPhoneNumber(),staff.getPassword(),staff.getPosition());
+
+        Staff saveStaff=this.StaffRepository.save(getStaffDetails);
+        log.info("staff was register:"+saveStaff);
+        return saveStaff;
     }
 
     @Override
