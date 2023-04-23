@@ -3,7 +3,6 @@ package mc.tech.com.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mc.tech.com.entities.Staff;
-import mc.tech.com.factory.factoryStaff;
 import mc.tech.com.repository.repositoryStaff;
 import mc.tech.com.service.implementation.StaffImplementation;
 
@@ -29,13 +28,32 @@ public class ServiceStaff implements StaffImplementation {
 
             throw new IllegalArgumentException("Staff Phone Number already Exist");
         }
-        Staff getStaffDetails= factoryStaff.BuildStaff(staff.getName(),
+        Staff getStaffDetails= new Staff(staff.getName(),staff.getSurname(),
                 staff.getEmail(),staff.getPhoneNumber(),staff.getPassword(),staff.getPosition());
 
         Staff saveStaff=this.StaffRepository.save(getStaffDetails);
         log.info("staff was register:"+saveStaff);
         return saveStaff;
     }
+
+
+    public Optional<Staff> Editsave(Staff name) {
+        int ID=name.getStaffId();
+        return findByID(ID).map(name1 -> {
+            String firstName=name.getName();
+            String surname= name.getSurname();
+            String phoneNumber=name.getPhoneNumber();
+            int id=name1.getStaffId();
+            String Email=name1.getEmail();
+            String password=name.getPassword();
+            String position= name.getPosition();
+            Staff update = new Staff(id,firstName,surname,Email,phoneNumber,password,position);
+            System.out.println("updated "+update);
+            return this.StaffRepository.save(update);
+        });
+
+    }
+
 
     @Override
     public Optional<Staff> read(Integer integer) {
@@ -49,19 +67,14 @@ public class ServiceStaff implements StaffImplementation {
     this.StaffRepository.deleteById(deleteById);
     }
 
-    @Override
-    public Staff findById(int id) {
-        Staff find=this.StaffRepository.findById(id);
-        log.info("Find  staff by id :"+find);
-        return find;
-    }
 
     @Override
-    public Staff findByEmail(String email) {
-        Staff findByEmail=this.StaffRepository.findByEmail(email);
+    public  Optional<Staff> findByEmail(String email) {
+        Optional<Staff> findByEmail= Optional.ofNullable(this.StaffRepository.findByEmail(email));
         log.info("Find  staff by email :"+findByEmail);
         return findByEmail;
     }
+
 
     @Override
     public Staff findByName(String StaffName) {
@@ -75,5 +88,27 @@ public class ServiceStaff implements StaffImplementation {
         List<Staff> findAll=this.StaffRepository.findAll();
         log.info("Find All staff  :"+findAll);
         return findAll;
+    }
+
+    @Override
+    public List<Staff> findAllByOrderByStaffIdDesc() {
+        List<Staff> list=this.StaffRepository.findAllByOrderByStaffIdDesc();
+        System.out.println(list);
+        return list;
+    }
+
+    public long getTotalStaffRCount() {
+        return this.StaffRepository.count();
+    }
+
+    public Optional<Staff> findByID(int id) {
+        return Optional.ofNullable(this.StaffRepository.findById(id));
+    }
+
+    public List<String> findStaffAllName() {
+        List<String> ListOfStaff=this.StaffRepository.findAllStaffNames();
+
+        log.info("List Of Staff Names"+ListOfStaff);
+        return ListOfStaff;
     }
 }

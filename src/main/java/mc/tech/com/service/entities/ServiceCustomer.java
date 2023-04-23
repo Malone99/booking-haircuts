@@ -3,66 +3,116 @@ package mc.tech.com.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mc.tech.com.entities.Customer;
-import mc.tech.com.factory.factoryCustomer;
+
+import mc.tech.com.entities.role;
 import mc.tech.com.repository.repositoryCustomer;
-import mc.tech.com.service.implementation.CustomerImplementation;
-import org.springframework.stereotype.Service;
-
+import mc.tech.com.repository.roleRepository;
+import mc.tech.com.service.implementation.EmplImpl;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
 @RequiredArgsConstructor
-@Service
+@org.springframework.stereotype.Service
 @Slf4j
-public class ServiceCustomer implements CustomerImplementation {
+@Transactional
+public class ServiceCustomer implements EmplImpl{
 
-    private final repositoryCustomer repositoryCustomer;
-
-    @Override
-    public Customer findById(int CustomerId) {
+    private final repositoryCustomer repository;
+    private final roleRepository rolerepository;
 
 
-        Customer CustomerID=this.repositoryCustomer.findById(CustomerId) ;
-        log.info("Customer find By Id:"+CustomerID);
-        return CustomerID;
-    }
+
+
 
     @Override
-    public Customer findByEmailOrPhoneNumber(String emailOrPhone) {
+    public Customer save(Customer empl) {
+//        password=  passwordEncoder.encode(empl.getPassword());
 
-
-//        Customer  getCustomer=this.repositoryCustomer.findCustomerByEmailOrPhoneNumber(emailOrPhone);
-//         log.info("findCustomerByEmailOrPhoneNumber",getCustomer);
-
-        return null;
-    }
-
-    @Override
-    public Customer save(Customer customer) {
-
-        if(repositoryCustomer.existsCustomerByEmail(customer.getEmail())){
+        if(repository.existsEmplByEmail(empl.getEmail())){
 
             throw new IllegalArgumentException("customer Email already Exist");
-        } else if(repositoryCustomer.existsCustomerByPhoneNumber(customer.getPhoneNumber())){
+        } else if(repository.existsEmplByPhoneNumber(empl.getPhoneNumber())){
 
             throw new IllegalArgumentException("customer Phone Number already Exist");
         }
-        Customer getCustomerDetails= factoryCustomer.BuildCustomer(customer.getName(),
-                customer.getEmail(),customer.getPhoneNumber(),customer.getPassword(),
-                customer.getAddress(),  customer.getPaymentInformation());
-        Customer SaveCustomer=this.repositoryCustomer.save(getCustomerDetails);
-        log.info("Save Customer :"+SaveCustomer);
+        Customer getCustomerDetails= new Customer(empl.getName(),
+                empl.getEmail(),empl.getPhoneNumber(),empl.getPassword(),
+                empl.getAddress(),new ArrayList<>());
+        Customer SaveCustomer=this.repository.save(getCustomerDetails);
+        log.info("Save ControllerCustomer :"+SaveCustomer);
         return SaveCustomer;
+    }
+
+
+    public Optional<Customer> EditsaveCustomer(Customer name) {
+        int ID=name.getEmplId();
+        return findByID(ID).map(name1 -> {
+            String Name=name.getName();
+            String address= name.getAddress();
+            String phoneNumber=name.getPhoneNumber();
+            int id=name1.getEmplId();
+            String Email=name1.getEmail();
+            String password=name.getPassword();
+            Customer update = new Customer(id,Name,Email,phoneNumber,password,address,new ArrayList<>());
+            System.out.println("updated "+update);
+            return this.repository.save(update);
+        });
+
     }
 
     @Override
     public Optional<Customer> read(Integer integer) {
-        Optional<Customer>readId=this.repositoryCustomer.findById(integer);
-        log.info("read Customer By Id :"+readId);
+        Optional<Customer>readId=this.repository.findById(integer);
+        log.info("read ControllerCustomer By Id :"+readId);
         return readId;
+    }
+    @Override
+    public Customer findById(int CustomerId) {
+        Customer CustomerID=this.repository.findById(CustomerId) ;
+        log.info("ControllerCustomer find By Id:"+CustomerID);
+        return CustomerID;
+    }
+
+    public List<Customer> findAll() {
+        List<Customer> CustomerList=this.repository.findAll();
+        log.info("List Of ControllerCustomer "+CustomerList);
+        return CustomerList;
+    }
+
+    @Override
+    public Customer findByEmailOrPhoneNumber(String emailOrPhone) {
+        return null;
+    }
+
+    @Override
+    public void addRoletoUser(String email, String rolename) {
+
+        //log.info("adding role to a User {}",username,rolename);
+        Customer customer= this.repository.findByEmail(email);
+        role roles= rolerepository.findByName(rolename);
+        customer.getRoles().add(roles);  //the @transaction going to save it
+    }
+
+    @Override
+    public Customer getCustomer(String email) {
+        Customer customer =this.repository.findByEmail(email);
+        return customer;
     }
 
     @Override
     public void delete(int deleteById) {
 
-        this.repositoryCustomer.deleteById(deleteById);
-   }
+        this.repository.deleteById(deleteById);
+    }
+    public long getTotalCustomerCount() {
+        return this.repository.count();
+    }
+
+    public Optional<Customer> findByID(int id) {
+        return Optional.ofNullable(this.repository.findById(id));
+    }
+
+
 }

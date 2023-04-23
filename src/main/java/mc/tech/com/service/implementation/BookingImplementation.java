@@ -8,6 +8,5 @@ public interface BookingImplementation extends IService<Booking, Integer>{
     Booking findById(int id);
 //    List<Booking> findByCustomerId(int customerId);
     List<Booking> findAllBooking();
-    List<Booking> findByStaffName(String staffId);
     List<Booking> findByDate(String date);
 }

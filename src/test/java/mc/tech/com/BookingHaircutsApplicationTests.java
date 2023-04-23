@@ -1,10 +1,6 @@
 package mc.tech.com;
 
-import mc.tech.com.entities.Booking;
-import mc.tech.com.entities.Service;
 import mc.tech.com.entities.Staff;
-import mc.tech.com.service.entities.ServceService;
-import mc.tech.com.service.entities.ServiceCustomer;
 import mc.tech.com.service.entities.ServiceStaff;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

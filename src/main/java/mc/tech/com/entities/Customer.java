@@ -1,127 +1,48 @@
 package mc.tech.com.entities;
 
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
+@Setter
+@Getter
+@ToString
+ @NoArgsConstructor @AllArgsConstructor
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
+    @SequenceGenerator(name = "userAccount", sequenceName = "ORACLE_DB_SEQ_ID",
+            allocationSize = 7, initialValue = 7001)
+    @GeneratedValue(strategy = SEQUENCE, generator = "userAccount")
+    private int EmplId;
+    @NonNull
     private String name;
+    @NonNull
     private String email;
+    @NonNull
     private String phoneNumber;
+    @NonNull
     private String password;
+    @NonNull
     private String address;
-    private String paymentInformation;
 
 
-    public Customer(Builder builder) {
-        this.customerId = builder. customerId;
-        this.name =builder.  name;
-        this.email = builder. email;
-        this.phoneNumber =builder.  phoneNumber;
-        this.password =builder.  password;
-        this.address = builder. address;
-        this.paymentInformation =builder.  paymentInformation;
-    }
-
-    public Customer() {
-
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-    public String getPaymentInformation() {
-        return paymentInformation;
-    }
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId=" + customerId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
-                ", paymentInformation='" + paymentInformation + '\'' +
-                '}';
-    }
-    public static class Builder {
-        private int customerId;
-        private String name;
-        private String email;
-        private String phoneNumber;
-        private String password;
-        private String address;
-        private String paymentInformation;
-
-        public Builder setCustomerId(int customerId) {
-            this.customerId = customerId;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder setEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Builder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder setPaymentInformation(String paymentInformation) {
-            this.paymentInformation = paymentInformation;
-            return this;
-        }
-        public Customer builder()
-        {
-            return new Customer(this);
-        }
-
-
-
+    public Customer(@NonNull String name, @NonNull String email, @NonNull String phoneNumber, @NonNull String password, @NonNull String address, List<role> roles) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.address = address;
+        this.roles = roles;
     }
 
 
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<role> roles = new ArrayList<>();
 
 }
