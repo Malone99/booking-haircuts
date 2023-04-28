@@ -714,13 +714,12 @@
                         <button ><a th:href="@{/booking-haircut/add_Employee}" style="color: white">Add record</a></button>
                         <h3 style="margin-left: 250px">LIST OF EMPLOYEE</h3>
                     </div>
-
-                    <div class="browse">
-                        <input type="search" placeholder="Search" class="record-search">
-                        <select name="" id="">
-                            <option value="">Status</option>
-                        </select>
-                    </div>
+                    <form th:action="@{/booking-haircut/admin/Employee}">
+                      <div class="browse">
+                        <input type="search" placeholder="Search" class="record-search" name="keyword">
+                        <button type="submit" >Search</button>
+                      </div>
+                    </form>
                 </div>
 
                 <div>

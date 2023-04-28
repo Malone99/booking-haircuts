@@ -111,4 +111,11 @@ public class ServiceStaff implements StaffImplementation {
         log.info("List Of Staff Names"+ListOfStaff);
         return ListOfStaff;
     }
+
+    public List<Staff> findByKeyword(String keyword) {
+        List<Staff> ListOfStaff=this.StaffRepository.findByKeyword(keyword);
+
+        log.info("List Of Staff find by keyword"+ListOfStaff);
+        return ListOfStaff;
+    }
 }

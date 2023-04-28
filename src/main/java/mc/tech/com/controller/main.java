@@ -65,16 +65,20 @@ public class main {
     }
 
     @GetMapping({"/admin/Employee"})
-    public ModelAndView Dashboard_Admin_listOfEmployee()
+    public ModelAndView Dashboard_Admin_listOfEmployee( String keyword)
     {
         ModelAndView modelAndView = new ModelAndView("component/Employee-admin");
         modelAndView.addObject("totalCustomer",this.serviceCustomer.getTotalCustomerCount());
         modelAndView.addObject("ListOfcustomer",this.serviceCustomer.findAll());
         modelAndView.addObject("totalStaff",this.serviceStaff.getTotalStaffRCount());
         modelAndView.addObject("totalBooking",this.booking.getTotalBookingRCount());
-        modelAndView.addObject("ListOfStaff",this.serviceStaff.findAllByOrderByStaffIdDesc());
         modelAndView.addObject("totalMoney",this.booking.TotalMoney());
+        if (keyword !=null){
+            modelAndView.addObject("ListOfStaff",this.serviceStaff.findByKeyword(keyword));
 
+        }else {
+            modelAndView.addObject("ListOfStaff", this.serviceStaff.findAllByOrderByStaffIdDesc());
+        }
         return modelAndView;
     }
 

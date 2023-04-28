@@ -48,7 +48,7 @@ public class ControllerBooking {
         return mav;
     }
     @GetMapping({"/Booking"})
-    public ModelAndView Dashboard_Admin_listOfUsers( String keyword)
+    public ModelAndView Dashboard_Admin_listOfUsers()
     {
         ModelAndView modelAndView = new ModelAndView("component/Booking-admin");
         modelAndView.addObject("totalCustomer",this.serviceCustomer.getTotalCustomerCount());
@@ -57,13 +57,10 @@ public class ControllerBooking {
         modelAndView.addObject("totalBooking",this.booking.getTotalBookingRCount());
         modelAndView.addObject("totalMoney",this.booking.TotalMoney());
         modelAndView.addObject("ListOfStaff",this.serviceStaff.findAll());
-        if(keyword !=null){
-            modelAndView.addObject("ALLBooking",this.serviceBooking.Searching(keyword));
-            return modelAndView;
-        }else {
+
             modelAndView.addObject("ALLBooking", this.serviceBooking.findAll());
 
-        }
+
         return modelAndView;
     }
     @GetMapping("/BookingDeleteId")

@@ -51,11 +51,7 @@ public class ServiceBooking implements BookingImplementation {
         log.info("find Booking By all:"+find);
         return find;
     }
-    public List<Booking> Searching(String keyword) {
-        List<Booking> find=this.repository.findByCustomerNameContainingIgnoreCaseOrServiceNameContainingIgnoreCase(keyword,keyword);
-        log.info("find by keyword:"+find);
-        return find;
-    }
+
 
 
     @Override
@@ -161,4 +157,6 @@ public class ServiceBooking implements BookingImplementation {
     public Optional<Booking> findByID(int id) {
         return Optional.ofNullable(this.repository.findById(id));
     }
+
+
 }

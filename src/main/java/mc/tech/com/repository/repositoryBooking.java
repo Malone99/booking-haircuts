@@ -19,8 +19,6 @@ public interface repositoryBooking extends JpaRepository<Booking,Integer> {
     long count();
     @Query("SELECT SUM(b.price) FROM Booking b WHERE b.status = :status")
     Double getTotalPriceByStatus(@Param("status") String status);
-    List<Booking> findByCustomerNameContainingIgnoreCaseOrServiceNameContainingIgnoreCase(String customerName, String serviceName);
-
 
 
 }

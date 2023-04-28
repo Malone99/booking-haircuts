@@ -26,6 +26,92 @@
     <link th:href="@{/assets/images/hero-banner.jpg}" rel="preload" as="image">
     <script type="text/javascript" src="font-awesome/js1/fontawesome.js"></script>
     <script type="text/javascript" src=""></script>
+    <style>
+
+
+        .profiles {
+            position: relative;
+            text-align: center;
+
+        }
+
+        .profiles img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid red;
+            cursor: pointer
+        }
+
+        .dropdowns-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            transition:all 2s;
+        }
+
+        .dropdowns-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block
+        }
+
+        .dropdowns-content a:hover {
+            background-color: #ddd
+        }
+
+        .dropdowns:hover .dropdowns-content {
+            display: block
+        }
+
+        .profiles ul {
+            background-color: #fff;
+            width: 200px;
+            height: 270px;
+            border-radius: 10px;
+            right: 25px;
+            top: 7px;
+            position: absolute;
+            padding: 8px;
+            transition: all 0.5s;
+            z-index: 1
+        }
+
+        .profiles ul::before {
+            content: '';
+            position: absolute;
+            background-color: #fff;
+            height: 10px;
+            width: 10px;
+            top: -5px;
+            transform: rotate(45deg)
+        }
+
+        .profiles ul li {
+            list-style: none;
+            text-align: left;
+            font-size: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s;
+            cursor: pointer;
+            border-radius: 4px
+        }
+
+        .profiles ul li:hover {
+            background-color: #174122
+        }
+
+        .profiles ul li i {
+            margin-right: 7px
+        }
+
+    </style>
 </head>
 <body id="top">
 <header class="header">
@@ -128,7 +214,24 @@
                 <span class="span">Appointment</span>
                 <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
             </a>
+            <div class="container-profile">
+                <div class="dropdowns">
+                    <div class="profiles">
+                        <img class="dropbtn" src="https://i.imgur.com/ywRonqz.jpg" />
+                        <div class="dropdowns-content">
+                            <ul>
+                                <li><i class="bx bx-cog"></i><span>Settings</span></li>
+                                <li><i class="bx bx-user"></i><span>Profiles</span></li>
+                                <li><i class="bx bx-cog"></i><span>Inbox</span></li>
+                                <li><i class="bx bx-cog"></i><span>Help</span></li>
+                                <li><i class="bx bx-log-in-circle"></i><span>Logout</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 </header>

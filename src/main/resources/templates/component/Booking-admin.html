@@ -718,12 +718,12 @@
                         <h3 style="margin-left: 250px">LIST OF BOOKING</h3>
                     </div>
 
-                    <div class="browse">
-                        <form method="get"  th:action="@{/booking-haircut/booking}">
-                            <input type="text" name="keyword" >
-                            <button type="submit">Search</button>
-                        </form>
-                    </div>
+                    <form th:action="@{/booking-haircut/Booking}">
+                        <div class="browse">
+                            <input type="search" placeholder="Search" class="record-search" name="keyword">
+                            <button type="submit" >Search</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div>

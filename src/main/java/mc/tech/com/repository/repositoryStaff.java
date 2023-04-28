@@ -20,6 +20,8 @@ public interface repositoryStaff  extends JpaRepository<Staff,Integer> {
     boolean existsStaffByPhoneNumber(String PhoneNumber);
     boolean existsStaffByEmail(String email);
     long count();
+    @Query(value = "SELECT * FROM Staff s where s.name like %:keyword% or s.surname like %:keyword%",nativeQuery = true)
+    List<Staff> findByKeyword(@Param("keyword") String keyword);
 
     @Query("UPDATE Staff s SET s.name = :name, s.surname = :surname, s.phoneNumber = :phoneNumber, s.position = :position WHERE s.email = :email")
     Staff updateStaffByEmail(@Param("name") String name, @Param("surname") String surname, @Param("phoneNumber") String phoneNumber, @Param("position") String position, @Param("email") String email);
