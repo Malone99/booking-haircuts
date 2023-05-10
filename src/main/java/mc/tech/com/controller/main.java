@@ -78,19 +78,12 @@ public class main {
 
         }else {
             modelAndView.addObject("ListOfStaff", this.serviceStaff.findAllByOrderByStaffIdDesc());
+            // ListOfStaff contain all the staff find in database  => this.serviceStaff.findAllByOrderByStaffIdDesc()
         }
         return modelAndView;
     }
 
-    @GetMapping({"/login"})
-    public ModelAndView loginForm(){
-        ModelAndView mav= new ModelAndView("component/Login");
-        return mav;
-    }
-
-
-
-    @GetMapping("/add_Employee")
+    @GetMapping("/admin/add_Employee")
     public ModelAndView regier(){
         ModelAndView mav= new ModelAndView("component/add_Employee");
         Staff staff1= new Staff ();
@@ -98,19 +91,19 @@ public class main {
         return mav;
     }
 
-    @PostMapping("/saveStaff")
+    @PostMapping("/admin/saveStaff")
     public RedirectView SaveStaff(@ModelAttribute Staff staff){
 
         this.repositoryStaff.save(staff);
         return new RedirectView("http://localhost:8080/booking-haircut/admin/Employee");
     }
-    @PostMapping("/Edit/Staff")
+    @PostMapping("/admin/Edit/Staff")
     public RedirectView EditSaveStaff(@ModelAttribute Staff staff){
 
         this.serviceStaff.Editsave(staff);
         return new RedirectView("http://localhost:8080/booking-haircut/admin/Employee");
     }
-    @GetMapping({"/editEmployee"})
+    @GetMapping({"/admin/editEmployee"})
     public  ModelAndView editEmployee( int id){
         ModelAndView mav= new ModelAndView("component/edit_Employee");
         Optional<Staff> email1= Optional.ofNullable(this.serviceStaff.findByID((id)).orElseThrow(()
@@ -119,7 +112,7 @@ public class main {
         return mav;
     }
 
-    @GetMapping("/EmployeeDeleteId")
+    @GetMapping("/admin/EmployeeDeleteId")
     public RedirectView deleteEmployee(int Id){
         this.serviceStaff.delete(Id);
         return new RedirectView("http://localhost:8080/booking-haircut/admin/Employee");

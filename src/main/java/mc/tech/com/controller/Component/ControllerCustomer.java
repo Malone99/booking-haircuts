@@ -3,6 +3,7 @@ package mc.tech.com.controller.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;;
 import mc.tech.com.entities.Customer;
+import mc.tech.com.entities.Staff;
 import mc.tech.com.service.entities.ServiceCustomer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,13 @@ public class ControllerCustomer {
         mav.addObject("employee",customer1);
         return mav;
     }
-
+    @GetMapping({"/signup"})
+    public ModelAndView signup(){
+        ModelAndView mav= new ModelAndView("component/SignUp");
+        mc.tech.com.entities.Customer customer1= new mc.tech.com.entities.Customer();
+        mav.addObject("customerregister",customer1);
+        return mav;
+    }
     @PostMapping("/register/save")
     public RedirectView SaveCustomer(@ModelAttribute mc.tech.com.entities.Customer customer, BindingResult result, Model model){
         Customer existing = this.serviceCustomer.getCustomer(customer.getEmail());
@@ -41,16 +48,17 @@ public class ControllerCustomer {
             return new RedirectView("http://localhost:8080/booking-haircut/register");
         }
         this.serviceCustomer.save(customer);
-        return new RedirectView("http://localhost:8080/booking-haircut");
+        return new RedirectView("http://localhost:8080/booking-haircut/signup?success");
     }
 
-    @PostMapping("/Edit/Customer")
+    @PostMapping("/admin/Edit/Customer")
     public RedirectView EditSaveStaff(@ModelAttribute mc.tech.com.entities.Customer customer){
 
         this.serviceCustomer.EditsaveCustomer(customer);
         return new RedirectView("http://localhost:8080/booking-haircut/admin");
     }
-    @GetMapping({"/editCustomer"})
+
+    @GetMapping({"/admin/editCustomer"})
     public  ModelAndView editEmployee( int id){
         ModelAndView mav= new ModelAndView("component/edit_Customer");
         Optional<mc.tech.com.entities.Customer> email1= Optional.ofNullable(this.serviceCustomer.findByID(id)).orElseThrow(()
@@ -58,13 +66,13 @@ public class ControllerCustomer {
         mav.addObject("Customer",email1);
         return mav;
     }
-    @GetMapping("/CustomerDeleteId")
+    @GetMapping("/admin/CustomerDeleteId")
     public RedirectView deleteCustomer(int Id){
         this.serviceCustomer.delete(Id);
         return new RedirectView("http://localhost:8080/booking-haircut/admin");
     }
 
-    @GetMapping("/add_Cusomer")
+    @GetMapping("/admin/add_Cusomer")
     public ModelAndView regier(){
         ModelAndView mav= new ModelAndView("component/add_Customer");
         Customer Customer1 =new Customer();
@@ -77,8 +85,6 @@ public class ControllerCustomer {
         this.serviceCustomer.save(customer);
         return new RedirectView("http://localhost:8080/booking-haircut/admin");
     }
-
-
 
 
 

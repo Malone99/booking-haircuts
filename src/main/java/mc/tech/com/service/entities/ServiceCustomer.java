@@ -1,34 +1,43 @@
 package mc.tech.com.service.entities;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mc.tech.com.entities.Role;
+import mc.tech.com.repository.RoleRepository;
 import mc.tech.com.entities.Customer;
 
-import mc.tech.com.entities.role;
 import mc.tech.com.repository.repositoryCustomer;
-import mc.tech.com.repository.roleRepository;
+import mc.tech.com.service.email.EmailSender;
 import mc.tech.com.service.implementation.EmplImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+import static mc.tech.com.service.email.EmailService.buildEmail;
+
+
 @org.springframework.stereotype.Service
 @Slf4j
 @Transactional
+@AllArgsConstructor
 public class ServiceCustomer implements EmplImpl{
 
     private final repositoryCustomer repository;
-    private final roleRepository rolerepository;
+    private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
+    private final EmailSender emailSender;
 
 
-
-
-
-    @Override
+ @Override
     public Customer save(Customer empl) {
-//        password=  passwordEncoder.encode(empl.getPassword());
+    String password=  passwordEncoder.encode(empl.getPassword());
+     Role roles = this.roleRepository.findByName("ROLE_USER");
+     if(roles == null){
+         throw new IllegalArgumentException(" does not ROLE_ADMIN Exist");
+     }
 
         if(repository.existsEmplByEmail(empl.getEmail())){
 
@@ -37,11 +46,15 @@ public class ServiceCustomer implements EmplImpl{
 
             throw new IllegalArgumentException("customer Phone Number already Exist");
         }
+         List<Role> roles1= Arrays.asList(roles);
         Customer getCustomerDetails= new Customer(empl.getName(),
-                empl.getEmail(),empl.getPhoneNumber(),empl.getPassword(),
-                empl.getAddress(),new ArrayList<>());
+                empl.getEmail(),empl.getPhoneNumber(),password,
+                empl.getAddress(),roles1);
         Customer SaveCustomer=this.repository.save(getCustomerDetails);
         log.info("Save ControllerCustomer :"+SaveCustomer);
+     emailSender.send(
+             empl.getEmail(),
+             buildEmail(empl.getName()));
         return SaveCustomer;
     }
 
@@ -55,10 +68,22 @@ public class ServiceCustomer implements EmplImpl{
             int id=name1.getEmplId();
             String Email=name1.getEmail();
             String password=name.getPassword();
-            Customer update = new Customer(id,Name,Email,phoneNumber,password,address,new ArrayList<>());
+            Customer update = new Customer(id,Name,Email,phoneNumber,password,address);
             System.out.println("updated "+update);
             return this.repository.save(update);
         });
+
+    }
+    public Customer EditSaveUser(Customer name) {
+        Customer customer1=this.repository.findByEmail(name.getEmail())  ;
+           if(customer1==null){
+               throw new IllegalArgumentException(" Email doeas not exist");
+           }
+            Customer update = new Customer(customer1.getEmplId(),name.getName(),
+                    name.getEmail(),name.getPhoneNumber(),customer1.getPassword(),name.getAddress());
+
+            return this.repository.save(update);
+
 
     }
 
@@ -88,13 +113,16 @@ public class ServiceCustomer implements EmplImpl{
 
     @Override
     public void addRoletoUser(String email, String rolename) {
+        Role roles= roleRepository.findByName(rolename);
+        Customer useradd= repository.findByEmail(email);
+        if(useradd==null ||roles==null ){
 
-        //log.info("adding role to a User {}",username,rolename);
-        Customer customer= this.repository.findByEmail(email);
-        role roles= rolerepository.findByName(rolename);
-        customer.getRoles().add(roles);  //the @transaction going to save it
+            log.info("Can not find this email::",email);
+            log.info("Error",roles);
+        }
+        useradd.getRoles().add(roles);  //the @transaction going to save it
+
     }
-
     @Override
     public Customer getCustomer(String email) {
         Customer customer =this.repository.findByEmail(email);
@@ -112,6 +140,12 @@ public class ServiceCustomer implements EmplImpl{
 
     public Optional<Customer> findByID(int id) {
         return Optional.ofNullable(this.repository.findById(id));
+    }
+
+    public Role saveRole(Role role) {
+        Role role1=new Role(role.getName(),role.getUsers());
+        Role rl= this.roleRepository.save(role1);
+        return  rl;
     }
 
 

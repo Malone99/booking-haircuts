@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -26,6 +26,7 @@
     <link th:href="@{/assets/images/hero-banner.jpg}" rel="preload" as="image">
     <script type="text/javascript" src="font-awesome/js1/fontawesome.js"></script>
     <script type="text/javascript" src=""></script>
+
     <style>
 
 
@@ -40,8 +41,9 @@
             height: 60px;
             border-radius: 50%;
             border: 2px solid red;
-            cursor: pointer
-        }
+            cursor: pointer;
+            
+          }
 
         .dropdowns-content {
             display: none;
@@ -60,9 +62,6 @@
             display: block
         }
 
-        .dropdowns-content a:hover {
-            background-color: #ddd
-        }
 
         .dropdowns:hover .dropdowns-content {
             display: block
@@ -71,7 +70,7 @@
         .profiles ul {
             background-color: #fff;
             width: 200px;
-            height: 270px;
+            height: 200px;
             border-radius: 10px;
             right: 25px;
             top: 7px;
@@ -200,11 +199,10 @@
                     <li class="navbar-item dropdown">
                         <a href="#gallery" class="navbar-link dropdown-toggle" data-toggle="dropdown" data-nav-link>Account</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#gallery/landscape">SignIn </a></li>
-                            <li><a th:href="@{booking-haircut/register}">SignUp</a></li>
+                            <li><a th:href="@{booking-haircut/login}">SignIn </a></li>
+                            <li><a th:href="@{booking-haircut/signup}">SignUp</a></li>
                         </ul>
                     </li>
-
                 </ul>
             </nav>
             <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
@@ -214,17 +212,19 @@
                 <span class="span">Appointment</span>
                 <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
             </a>
-            <div class="container-profile">
+            <div class="container-profile" sec:authorize="hasRole('USER')">
                 <div class="dropdowns">
                     <div class="profiles">
+                        <div  >
                         <img class="dropbtn" src="https://i.imgur.com/ywRonqz.jpg" />
+                        <h3   sec:authentication="name" style=" display: none;"></h3>
+                        
+                        </div>
                         <div class="dropdowns-content">
                             <ul>
-                                <li><i class="bx bx-cog"></i><span>Settings</span></li>
-                                <li><i class="bx bx-user"></i><span>Profiles</span></li>
-                                <li><i class="bx bx-cog"></i><span>Inbox</span></li>
-                                <li><i class="bx bx-cog"></i><span>Help</span></li>
-                                <li><i class="bx bx-log-in-circle"></i><span>Logout</span></li>
+                                <li><i class="bx bx-user"></i><a type="submit" th:href="@{/booking-haircut/user/profile(email=${#authentication.name})}">Profiles</a></li>
+                                <li><i class="bx bx-log-in-circle"></i><a type="submit" th:href="@{/booking-haircut/login}">Logout</a></li>
+                                <li sec:authorize="hasRole('ADMIN')"><i class="bx bx-log-in-circle"></i><a type="submit" th:href="@{/booking-haircut/admin}">Admin</a></li>
                             </ul>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
             </div>
         </section>
         <section class="section pricing has-bg-image has-before" id="pricing" aria-label="pricing"
-                 th:style="'background-image: url(' + @{/assets/images/pricing-bg.jpg} + ')'">
+                 style="'background-image: url(' + @{/assets/images/pricing-bg.jpg} + ')'">
         </section>
             <div class="container">
                 <h2 class="h2 section-title text-center">Awesome Pricing Plan</h2>

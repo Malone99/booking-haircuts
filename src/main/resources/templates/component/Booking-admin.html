@@ -644,7 +644,7 @@
             <h1>Dashboard</h1>
             <small ><a th:href="@{/booking-haircut/admin/Employee}" >EMPLOYEE</a></small>
             <small style="padding-left: 20px"><a th:href="@{/booking-haircut/admin}">CUSTOMER</a></small>
-            <small style="padding-left: 20px"><a th:href="@{/booking-haircut/Booking}">BOOKING</a></small>
+            <small style="padding-left: 20px"><a th:href="@{/booking-haircut/admin/Booking}">BOOKING</a></small>
         </div>
 
         <div class="page-content">
@@ -714,11 +714,11 @@
                         <select name="" id="">
                             <option value="">ID</option>
                         </select>
-                        <button ><a th:href="@{/booking-haircut/add_Booking}" style="color: white">Add record</a></button>
+                        <button ><a th:href="@{/booking-haircut/admin/add_Booking}" style="color: white">Add record</a></button>
                         <h3 style="margin-left: 250px">LIST OF BOOKING</h3>
                     </div>
 
-                    <form th:action="@{/booking-haircut/Booking}">
+                    <form th:action="@{/booking-haircut/admin/Booking}">
                         <div class="browse">
                             <input type="search" placeholder="Search" class="record-search" name="keyword">
                             <button type="submit" >Search</button>
@@ -760,8 +760,8 @@
                             <td  th:text="${Booking.price}"/>
                             <td  th:text="${Booking.status}"/>
                             <td >
-                                <a th:href="@{/booking-haircut/editBooking(id=${Booking.bookingId})}" class="btn btn-info" style="margin-left: 20px;"><i class='fa fa-edit' ></i></a>
-                                <a  class="far fa-trash-alt" style="margin-left: 20px; color: #b30000" th:href="@{/booking-haircut/BookingDeleteId(Id=${Booking.bookingId})}"/>
+                                <a th:href="@{/booking-haircut/admin/editBooking(id=${Booking.bookingId})}" class="btn btn-info" style="margin-left: 20px;"><i class='fa fa-edit' ></i></a>
+                                <a  class="far fa-trash-alt" style="margin-left: 20px; color: #b30000" th:href="@{/booking-haircut/admin/BookingDeleteId(Id=${Booking.bookingId})}"/>
 
                             </td>
                         </tr>

@@ -1,10 +1,12 @@
 package mc.tech.com.service.entities;
 
 import lombok.extern.slf4j.Slf4j;
+//import mc.tech.com.entities.Role;
+//import mc.tech.com.config.entity.User;
+//import mc.tech.com.config.service.impl.UserServiceImpl;
+import mc.tech.com.entities.Role;
 import mc.tech.com.entities.*;
-import mc.tech.com.factory.factoryBooking;
 import mc.tech.com.factory.factoryService;
-import mc.tech.com.factory.factoryStaff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 
 @SpringBootTest
@@ -31,13 +32,15 @@ class ServiceBookingTest {
     private ServiceCustomer serviceCustomer;
     @Autowired
     private ServceService serviceService;
-    @Autowired
-    private  ServiceRole serviceRole;
+
+
+
+
     Booking booking,booking1,booking2,booking3,booking4;
     Service service,service1,service2,service3,service4;
     Staff staff,staff1,staff2,staff3,staff4;
     Customer customer,customer1,customer2,customer3,customer4;
-    role roles,roles1;
+
 
     @BeforeEach
     void BeforeEachTest() throws IOException {
@@ -61,10 +64,6 @@ class ServiceBookingTest {
         service3= factoryService.BuildService("SHAVING","Hair Color","Clean",45,300,imageDataShave);
         service4= factoryService.BuildService("SHAVING","und","Clean",45,300,imageDataShave);
 
-        roles =new role("ADMIN");
-        roles1=new role("EMPLOYEE");
-
-
 
 
 
@@ -82,21 +81,25 @@ class ServiceBookingTest {
 
 
         customer= new Customer("Emma","dray@gmail.com","+27814783125",
-                "dry%142","15 rose road",new ArrayList<>());
+                "dry%142","15 rose road");
         customer1=  new Customer("Franck","Jeremie@gmail.com","+27810983125",
-                "dry%142","15 rose road",new ArrayList<>());
+                "dry%142","15 rose road");
         customer2= new Customer("Jeremie","drayff@gmail.com","+27844783125",
-                "dry%142","15 rose road",new ArrayList<>());
+                "dry%142","15 rose road");
         customer3=  new Customer("isaac","drayfl@gmail.com","+27804783125",
-                "dry%142","15 rose road",new ArrayList<>());
+                "dry%142","15 rose road");
         customer4=  new Customer("Dray","dy@gmail.com","+27824783125",
-                "dry%142","15 rose road",new ArrayList<>());
+                "dry%142","15 rose road");
 
 
     }
 
     @Test
     void a_save() throws IOException {
+        Role role1=new Role("ROLE_ADMIN");
+        Role role2=new Role("ROLE_USER");
+        serviceCustomer.saveRole(role2) ;
+        serviceCustomer.saveRole(role1) ;
         Customer customer11=this.serviceCustomer.save(customer) ;
         Customer customer12=this.serviceCustomer.save(customer1) ;
         Customer customer13=this.serviceCustomer.save(customer2) ;
@@ -143,44 +146,10 @@ class ServiceBookingTest {
         log.info("",booking14);
         log.info("",booking15);
 
-        serviceRole.save(roles);
-        serviceRole.save(roles1);
-        this.serviceCustomer.addRoletoUser(customer.getEmail(),roles.getName());
-        this.serviceCustomer.addRoletoUser(customer1.getEmail(),roles1.getName());
 
 
     }
 
-        @Test
-    void AddRole() {
 
-    }
-//
-//    @Test
-//    void findById() {
-//        Booking read   =this.serviceBooking.findById(1);
-//        log.info("find id "+read);
-//    }
-//    @Test
-//    void findAllBooking() {
-//        List<Booking> bookingList=this.serviceBooking.findAllBooking();
-//        log.info("List of Booking",bookingList);
-//
-//    }
-//
-//    @Test
-//    void findByStaffName() {
-//        List<Booking> read=this.serviceBooking.findByStaffName("paul");
-//        assertNotNull(read);
-//        log.info("List of Booking finding By "+read);
-//    }
-//
-//    @Test
-//    void findByDate() {
-//
-//        List<Booking> read=this.serviceBooking.findByDate("2023-04-01");
-//        assertNotNull(read);
-//        log.info("List of Booking finding By "+read);
-//    }
 
 }

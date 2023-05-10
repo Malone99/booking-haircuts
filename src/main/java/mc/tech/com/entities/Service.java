@@ -1,6 +1,8 @@
 package mc.tech.com.entities;
 
-import jakarta.persistence.*;
+
+
+import javax.persistence.*;
 
 @Entity
 public class Service {

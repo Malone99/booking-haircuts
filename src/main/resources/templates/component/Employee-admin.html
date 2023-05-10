@@ -641,7 +641,7 @@
             <h1>Dashboard</h1>
             <small ><a th:href="@{/booking-haircut/admin/Employee}" >EMPLOYEE</a></small>
             <small style="padding-left: 20px"><a th:href="@{/booking-haircut/admin}">CUSTOMER</a></small>
-            <small style="padding-left: 20px"><a th:href="@{/booking-haircut/Booking}">BOOKING</a></small>
+            <small style="padding-left: 20px"><a th:href="@{/booking-haircut/admin/Booking}">BOOKING</a></small>
         </div>
 
         <div class="page-content">
@@ -711,7 +711,7 @@
                         <select name="" id="">
                             <option value="">ID</option>
                         </select>
-                        <button ><a th:href="@{/booking-haircut/add_Employee}" style="color: white">Add record</a></button>
+                        <button ><a th:href="@{/booking-haircut/admin/add_Employee}" style="color: white">Add record</a></button>
                         <h3 style="margin-left: 250px">LIST OF EMPLOYEE</h3>
                     </div>
                     <form th:action="@{/booking-haircut/admin/Employee}">
@@ -754,9 +754,9 @@
                                 <h3 th:text="${Staff.position}"/>
                             </td>
                             <td >
-                               <a class="las la-pencil-alt" style="color: #16a085; font-size: 25px ;margin-left: 30px;"  th:href="@{/booking-haircut/editEmployee(id=${Staff.staffId})}"/>
+                               <a class="las la-pencil-alt" style="color: #16a085; font-size: 25px ;margin-left: 30px;"  th:href="@{/booking-haircut/admin/editEmployee(id=${Staff.staffId})}"/>
                                <a class="lar la-trash-alt" style="color: red; font-size: 25px; margin-left: 25px;"
-                                  th:href="@{/booking-haircut/EmployeeDeleteId(Id=${Staff.staffId})}"/>
+                                  th:href="@{/booking-haircut/admin/EmployeeDeleteId(Id=${Staff.staffId})}"/>
                             </td>
                         </tr>
 

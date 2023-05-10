@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"    xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>user profile update</title>
+
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link th:href="@{/assets/css/userProfile/style.css}" rel="stylesheet" />
+  </head>
+  <body th:style="'background-image: url(\'' + @{/assets/images/userProfile/delfina.jpg} + '\'); background-size: 50% auto;'" >
+    <h1 class="title"><span>user</span> profile</h1>
+
+    <section class="update-profile-container">
+      <form  th:action="@{/booking-haircut/user/Edit/Customer}" th:object="${UserDetails}"  method="POST">
+        <img th:src="@{/assets/images/alexanders.jpg}" alt="" />
+        <div class="flex">
+          <div class="inputBox">
+            <span style="display: none">ID : </span>
+            <input
+              type="text"
+              name="id"
+              th:field="*{EmplId}"
+              required
+              class="box"
+              disabled
+              style="display: none"
+            />
+            <span>Name : </span>
+            <input
+              type="text"
+              name="name"
+              th:field="*{name}"
+              required
+              class="box"
+            />
+            <span>Email : </span>
+            <input
+              type="email"
+              name="email"
+              th:field="*{email}"
+              class="box"
+              required
+            />
+          </div>
+          <div class="inputBox">
+            <input
+              type="hidden"
+              name="old_pass"
+            />
+            <span style="display: none">Password :</span>
+            <input
+              type="password"
+              class="box"
+              th:field="*{password}"
+              name="password"
+              disabled
+              required
+              style="display: none"
+            />
+            <span>Address :</span>
+            <input
+              type="text"
+              class="box"
+              name="Address"
+              th:field="*{address}"
+              required
+            />
+            <span>Phone :</span>
+            <input
+              type="text"
+              th:field="*{phoneNumber}"
+              class="box"
+              name="phone"
+              required
+            />
+          </div>
+        </div>
+        <div class="flex-btn">
+          <input
+            type="submit"
+            value="update profile"
+            name="update"
+            class="btn"
+          />
+          <a th:href="@{/booking-haircut}" class="option-btn">back</a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

@@ -39,7 +39,7 @@ public class ControllerBooking {
         this.serviceBooking.EditsaveBooking(booking);
         return new RedirectView("http://localhost:8080/booking-haircut/Booking");
     }
-    @GetMapping({"/editBooking"})
+    @GetMapping({"/admin/editBooking"})
     public ModelAndView editEmployee(int id){
         ModelAndView mav= new ModelAndView("component/edit_Booking");
         Optional<Booking> email1= Optional.ofNullable(this.serviceBooking.findByID(id)).orElseThrow(()
@@ -47,7 +47,7 @@ public class ControllerBooking {
         mav.addObject("Booking",email1);
         return mav;
     }
-    @GetMapping({"/Booking"})
+    @GetMapping({"/admin/Booking"})
     public ModelAndView Dashboard_Admin_listOfUsers()
     {
         ModelAndView modelAndView = new ModelAndView("component/Booking-admin");
@@ -63,13 +63,13 @@ public class ControllerBooking {
 
         return modelAndView;
     }
-    @GetMapping("/BookingDeleteId")
+    @GetMapping("/admin/BookingDeleteId")
     public RedirectView deleteId(int Id){
         this.serviceBooking.delete(Id);
         return new RedirectView("http://localhost:8080/booking-haircut/Booking");
     }
 
-    @GetMapping("/add_Booking")
+    @GetMapping("/admin/add_Booking")
     public ModelAndView add_Booking(){
         ModelAndView mav= new ModelAndView("component/add_Booking");
         Booking booking =new Booking();
